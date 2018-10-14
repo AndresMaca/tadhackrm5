@@ -62,6 +62,7 @@ class Post extends Component {
         this.state = {
             title: '',
             content: '',
+            image: '',
             isSubmitting: false,
             canVote: true,
             upvotes: props.upvotes,
@@ -80,7 +81,8 @@ class Post extends Component {
 
         // Obtain the content from IPFS using the `ipfsHash` variable
         const ipfsText = await EmbarkJS.Storage.get(ipfsHash);
-        
+        console.log(ipfsText);
+        console.log("cedcdcd");
         // Data Obtained from IPFS
         const jsonContent = JSON.parse(ipfsText);
         

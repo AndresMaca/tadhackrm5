@@ -23,6 +23,9 @@ module.exports = {
       password: "PATH/TO/PASSWORD/FILE" // File containing the password of the account
     },
     swarmPath: "PATH/TO/SWARM/EXECUTABLE" // Path to swarm executable (default: swarm)*/
+  },account: {
+    address: "852f1c757b43626842d874fedbe50af61c3e84b6",
+    password: "/Users/andresmaca/Library/Ethereum/keystore/UTC--2018-10-13T19-22-15.138166000Z--852f1c757b43626842d874fedbe50af61c3e84b6"
   },
 
   // default environment, merges with the settings in default
@@ -56,4 +59,9 @@ module.exports = {
   // "embark run custom_name"
   //custom_name: {
   //}
+ /*
+  ,account: {
+  address: "852f1c757b43626842d874fedbe50af61c3e84b6",
+  password: "/Users/andresmaca/Library/Ethereum/keystore/UTC--2018-10-13T19-22-15.138166000Z--852f1c757b43626842d874fedbe50af61c3e84b6"
+}*/
 };

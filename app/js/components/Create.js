@@ -11,6 +11,7 @@ import EmbarkJS from 'Embark/EmbarkJS';
 import web3 from 'Embark/web3';
 import DReddit from 'Embark/contracts/DReddit';
 
+
 const styles = theme => ({
   textField: {
     marginRight: theme.spacing.unit * 2
@@ -25,6 +26,8 @@ class Create extends Component{
     this.state = {
       'title': '',
       'content': '',
+      'picture': '',
+      'imageHash' : '',
       'isSubmitting': false,
       'error': ''
     };
@@ -42,12 +45,30 @@ class Create extends Component{
       isSubmitting: true, 
       error: ''
     });
-
+    let hash = '';
     
+    if (this.state.picture !== '') {
+      console.log("Si hay imagen")
+      try {
+        // upload the file to ipfs and get the resulting hash
+        console.log("Hash:");
+        this.state.imageHash = await EmbarkJS.Storage.uploadFile([this.inputPicture]);
+        console.log(this.state.imageHash)
+      }
+      catch (err) {
+        // stop loading state and show user the error
+        return this.setState({ isSubmitting: false,  error: err.message });
+      }
+    }else{
+      console.log("Nohay imagen");
+    }  
     const textToSave = {
       'title': this.state.title,
-      'content': this.state.content
+      'content': this.state.content, 
+      'imageHash': this.state.imageHash
     };
+    console.log("text to save: ")
+    console.log(textToSave)
 
     // Save the previous object in IPFS
     const ipfsHash = await EmbarkJS.Storage.saveText(JSON.stringify(textToSave));
@@ -80,7 +101,7 @@ class Create extends Component{
 
   render(){
     const {classes} = this.props;
-    const {error, content, title, isSubmitting} = this.state;
+    const {error, content, picture, title, isSubmitting} = this.state;
 
     return (<Fragment>
       <Card>
@@ -109,6 +130,15 @@ class Create extends Component{
             onChange={this.handleChange('content')}
             className={classes.textField}
             margin="normal" />
+          <TextField
+                type="file"
+                value={ picture }
+                onChange={this.handleChange('picture')}
+                name="picture"
+                label="Profile picture"
+                inputRef={ (input) => this.inputPicture = input }
+                
+              />
           {
             <Button variant="contained" color="primary" onClick={this.handleClick} disabled={isSubmitting }>Publish</Button>
           }
